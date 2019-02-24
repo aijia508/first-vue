@@ -9,7 +9,7 @@
 export default {
   name: 'App',
   created(){
-  console.log(this.$route);
+  // console.log(this.$route);
   console.log(this.$route.meta.requireAuth);
   // console.log(this.formdata.user);
   }
