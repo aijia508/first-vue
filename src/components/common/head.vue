@@ -3,11 +3,19 @@
   <el-container class="head">  
       <el-header>
           <span>内部管理系统</span>
-          <img src="static/img/退出.png" @click="quit"></img>
+          <img src="static/img/退出.png" @click="quit"/>
       </el-header>
   </el-container>
   <el-container class="content">
-    <el-aside width="180px"></el-aside>
+    <el-aside width="180px">
+      <el-menu :default-active="activeIndex" router background-color="#5e4dad" text-color="#fff" active-text-color="#ffd04b">
+        <el-submenu index="1">
+        <template slot="title">人员</template>
+          <el-menu-item index="1-1" :route="{name:'teacher'}">教师</el-menu-item>
+          <el-menu-item index="1-2" :route="{name:'student'}">学生</el-menu-item>
+        </el-submenu>
+      </el-menu>
+    </el-aside>
     <el-main>
       <router-view></router-view>
     </el-main>
@@ -20,7 +28,13 @@
 export default {
     data(){
       return{
-
+        activeIndex:'',
+      }
+    },
+    mounted(){
+      switch(this.$route.name){
+        case 'teacher':this.activeIndex='1-1';break;
+        case 'student':this.activeIndex='1-2';break;   
       }
     },
     methods:{
@@ -81,7 +95,12 @@ export default {
     height:100%;
     position:fixed;
     left:0px;
+    top:80px;
     z-index:10;
+    .el-menu{
+      background:#5e4dad;
+      border:0px solid red;
+    }
   }
   .el-main{
   background-color:#A2B8F2;

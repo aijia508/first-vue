@@ -34,7 +34,7 @@ export default{
                         if(url){
                             this.$router.push({path:url});
                         }else{
-                            this.$router.push('/home');
+                            this.$router.push('/teacher');
                         }
                         this.$message.success('登录成功！');
                     }else{

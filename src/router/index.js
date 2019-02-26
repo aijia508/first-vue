@@ -19,39 +19,36 @@ export var router = new Router({
       path:'/',
       name:'head',
       component:resolve => require(['@/components/common/head'],resolve),
-      redirect:{path:'/home'},
+      // redirect:{path:'/home'},
       children:[
-      {
-        path: '/home',
-        name: 'home',
-        component: resolve => require(['@/components/view/home'],resolve),
+        {
+          path:'/student',
+          name:'student',
+          component: resolve => require(['@/components/view/student'],resolve),
+          meta:{requireAuth:true},  
+        },{
+        path: '/teacher',
+        name: 'teacher',
+        component: resolve => require(['@/components/view/teacher'],resolve),
         meta:{requireAuth:true},
-      },{
-        path:'/study',
-        name:'study',
-        component: resolve => require(['@/components/view/study'],resolve),
-        meta:{requireAuth:true},  
       },
     ]
   }]
 });
-router.beforeEach((to, from, next) => {
-  // to and from are both route objects. must call `next`.
-  console.log(to.meta.requireAuth);
-  console.log(from.path,1111,to.path);
-  // if(to.path!='/login'){
-    if(to.meta.requireAuth == true){
-    if(sessionStorage.getItem('loginState') == 1){
-      next()
-    }else{
-      router.push({
-        path:'/login',
-        query:{redirect:to.fullPath}
-      });
-      next()
-    }
-  }
-  else{
-    next()
-  }
-})
+// router.beforeEach((to, from, next) => {
+
+//     if(to.meta.requireAuth == true){
+//     if(sessionStorage.getItem('loginState') == 1){
+//       next()
+//     }else{
+//       router.push({
+//         path:'/login',
+//         query:{redirect:to.fullPath}
+//       });
+//       // next()
+//     }
+//   }
+//   else{
+//     next()
+//   }
+// })
