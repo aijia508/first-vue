@@ -1,10 +1,10 @@
 <template>
 <div class="home">
   <el-card class="box-card">
-  <el-form :model="data" label-width="80px">
-    <el-form-item label="学号"><el-input v-model="data.id"></el-input></el-form-item>
-    <el-form-item label="姓名"><el-input v-model="data.name"></el-input></el-form-item>
-    <el-form-item label="性别">
+  <el-form :model="data" ref="formdata" label-width="80px" :rules="myRules">
+    <el-form-item label="学号" prop="id"><el-input v-model="data.id"></el-input></el-form-item>
+    <el-form-item label="姓名" prop="name"><el-input v-model="data.name"></el-input></el-form-item>
+    <el-form-item label="性别" prop="sex">
       <el-radio-group v-model="data.sex">
         <el-radio label="0">男</el-radio>
         <el-radio label="1">女</el-radio>
@@ -22,13 +22,33 @@
 <script>
 export default {
   data () {
+    var validateId = (rule,value,callback) => {
+      if(!/[0-9]{10}/.test(value)){
+        callback(new Error('必须为十位数字值'));
+      }else{
+        callback()
+      }
+    }
     return {
       data:{id:'',name:'',sex:''},
+      myRules:{
+        id:[{required:true,message:'不能为空',trigger:'blur'},{validator:validateId,trigger:'blur'}],
+        name:[{required:true,message:'不能为空',trigger:'blur'}],
+        sex:[{required:true,message:'请选择性别',trigger:'blur'}]
+        }
     }
   },
   methods: {
     onSubmit(){
-      console.log(this.data);
+      console.log(11,this.$refs.formdata);
+      this.$refs.formdata.validate((valid) => {
+        if(!valid){
+          console.log(11);
+          return false;
+        }else{
+          console.log(this.data);
+        }
+      })
       // this.$confirm('确认创建？','提示',{
       //   confirmbuttontext:'确定',
       //   concalbuttontext:'取消',
