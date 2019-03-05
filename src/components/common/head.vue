@@ -7,7 +7,7 @@
       </el-header>
   </el-container>
   <el-container class="content">
-    <el-aside width="180px">
+    <el-aside >
       <el-menu :default-active="activeIndex" router background-color="#5e4dad" text-color="#fff" active-text-color="#ffd04b">
         <el-submenu index="1">
         <template slot="title">人员</template>
@@ -61,9 +61,9 @@ export default {
   background-color:#E9EEF3;
   color:#61BCBF;
 }
-.el-container{
+.head{
   width:100%;
-  // height:100px;
+  height:80px;
   .el-header{
     background-color:#7562CE;
     // color:#333;
@@ -71,9 +71,7 @@ export default {
     height:80px!important;
     line-height:80px;
     width:100%;
-    position:fixed;
     margin-top:0;
-    z-index:999;
     span{
       // text-align:center;
       // line-height:100px;
@@ -90,25 +88,21 @@ export default {
   }
 }
 .content{ 
+  height:calc(100% - 80px);
+  // height:100%;
   .el-aside{
     background:#8271D2;
     height:100%;
-    position:fixed;
-    left:0px;
-    top:80px;
-    z-index:10;
+
     .el-menu{
       background:#5e4dad;
       border:0px solid red;
     }
   }
   .el-main{
-  background-color:#A2B8F2;
+  background-color:rgb(223, 223, 223);
   color:#333;
   height:100%;
-  margin-top:80px;
-  margin-left:180px;
-  padding:0;
 }
 }
 </style>

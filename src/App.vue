@@ -29,7 +29,10 @@ html,body{
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+  position:absolute;
+  width:100%;
   height:100%;
-  min-width:1900px;
+  max-width:1920px;
+  max-height:1080px;
 }
 </style>
