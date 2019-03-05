@@ -23,7 +23,7 @@
     <el-form :model="teacherData" :rules="myRules" ref="formData" label-width="80px">
       <el-form-item label="工号" prop="id">
         <el-input v-model="teacherData.id"></el-input>
-      </el-form-item>
+      <!-- </el-form-item> -->
       <el-form-item label="姓名" prop="name">
         <el-input v-model="teacherData.name"></el-input>
       </el-form-item>
