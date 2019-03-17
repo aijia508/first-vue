@@ -2,11 +2,11 @@
 <div class="login">
     <el-card class="box_card">
         <el-form :model="formdata" ref="formValidate">
-        <el-form-item prop="user" :rules="rules">
-        <el-input placeholder="用户名" v-model="formdata.user"></el-input>
+        <el-form-item prop="userName" :rules="rules">
+        <el-input placeholder="用户名" v-model="formdata.userName"></el-input>
         </el-form-item>
-        <el-form-item prop="password" :rules="rules">
-        <el-input placeholder="密码" v-model="formdata.password"></el-input>
+        <el-form-item prop="passworld" :rules="rules">
+        <el-input placeholder="密码" v-model="formdata.passworld"></el-input>
         </el-form-item>
         <el-form-item>
         <el-button type="primary" @click="loginButton">登录</el-button>
@@ -20,29 +20,40 @@
 export default{
     data(){
      return{
-        formdata:{user:'123',password:'123'},
+        formdata:{userName:'admin',passworld:'111111'},
         rules:{required:true,message:'输入不能为空',trigger:'blur'},
      }   
     },
     methods: {
         loginButton(){
-            this.$refs.formValidate.validate(valid => {
+            // this.$refs.formValidate.validate(valid => {
+            //     if(valid){
+            //         if(this.formdata.user == '123' && this.formdata.password == '123'){
+            //             sessionStorage.setItem('loginState',1);
+            //             let url = this.$route.query.redirect;
+            //             if(url){
+            //                 this.$router.push({path:url});
+            //             }else{
+            //                 this.$router.push('/teacher');
+            //             }
+            //             this.$message.success('登录成功！');
+            //         }else{
+            //             this.$message.error('用户名或密码错误！')
+            //         }
+            //     }else return false;
+                
+            // });
+            this.$refs.formValidate.validate((valid) => {
                 if(valid){
-                    if(this.formdata.user == '123' && this.formdata.password == '123'){
-                        sessionStorage.setItem('loginState',1);
-                        let url = this.$route.query.redirect;
-                        if(url){
-                            this.$router.push({path:url});
-                        }else{
+                    this.$axios.post('http://192.168.1.3:8080/api/login',this.formdata).then(res => {
+                        console.log(333,res)
+                        if(res.data.length > 0){
                             this.$router.push('/teacher');
                         }
-                        this.$message.success('登录成功！');
-                    }else{
-                        this.$message.error('用户名或密码错误！')
-                    }
-                }else return false;
-                
-            });
+                    })
+                }
+            })
+            
             
         },
         register(){

@@ -11,28 +11,36 @@ export default {
   created(){
   // console.log(this.$route);
   // console.log(this.$route.meta.requireAuth);
-  // console.log(this.formdata.user);
+  console.log(222,this.$axios);
   }
 }
 </script>
 
-<style>
-html,body{
+<style lang='less'>
+html{
+  height:100%;
+  width:100%;
+  margin:0;
+  padding:0;
+}
+body{
   height:100%;
   width:100%;
   margin:0;
   padding:0;
 }
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  /* font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  position:absolute;
+  position:absolute; */
   width:100%;
+  margin:0;
+  padding:0;
   height:100%;
-  max-width:1920px;
-  max-height:1080px;
+  /* max-width:1920px;
+  max-height:1080px; */
 }
 </style>

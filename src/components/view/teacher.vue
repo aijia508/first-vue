@@ -13,17 +13,29 @@
     </div>   
   </div>
   <div class="teachertable">
-    <el-table :data="tabledata" stripe border height="calc(100% - 40px)">
-      <el-table-column label="工号" prop="id" text-align="center"></el-table-column>
+    <el-table :data="tabledata" stripe border>
+      <el-table-column label="序号" prop="id"></el-table-column>
+      <el-table-column label="工号" prop="num" text-align="center"></el-table-column>
       <el-table-column label="姓名" prop="name"></el-table-column>
       <el-table-column label="性别" prop="sex"></el-table-column>
+      <el-table-column label="操作">
+      <template slot-scope="scope">
+        <el-button
+          size="mini"
+          @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
+        <el-button
+          size="mini"
+          type="danger"
+          @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+      </template>
+    </el-table-column>
     </el-table>
   </div>
   <el-dialog title="创建教职工对话框" :visible.sync="dialogVisible">
     <el-form :model="teacherData" :rules="myRules" ref="formData" label-width="80px">
-      <el-form-item label="工号" prop="id">
-        <el-input v-model="teacherData.id"></el-input>
-      <!-- </el-form-item> -->
+      <el-form-item label="工号" prop="num">
+        <el-input v-model="teacherData.num"></el-input>
+      </el-form-item>
       <el-form-item label="姓名" prop="name">
         <el-input v-model="teacherData.name"></el-input>
       </el-form-item>
@@ -47,24 +59,45 @@ export default {
   data () {
     return {
       dialogVisible:false,searchValue:'',
-      teacherData:{id:'',name:'',sex:''},
+      teacherData:{num:'',name:'',sex:''},
       myRules:{
-        id:{required:true,message:'请输入工号',trigger:'blur'},
+        num:{required:true,message:'请输入工号',trigger:'blur'},
         name:{required:true,message:'请输入姓名',trigger:'blur'},
         sex:{required:true,message:'请选择性别',trigger:'blur'}
       },
-      tabledata:[{id:'2014100112',name:'张三',sex:'男'},{id:'2014100213',name:'小明',sex:'男'},
-                {id:'2015100213',name:'小翠',sex:'女'},{id:'2015100316',name:'小花',sex:'女'}]
+      tabledata:[
+                // {id:'',num:'',name:'',sex:''}
+                // {num:'2014100112',name:'张三',sex:'男'},{num:'2014100213',name:'小明',sex:'男'},
+                // {num:'2015100213',name:'小翠',sex:'女'},{num:'2015100316',name:'小花',sex:'女'}
+                ]
     }
   },
+  created(){
+    this.getData();
+  },
   methods: {
+    handleEdit(index,row){
+      // console.log(index,row);
+    },
+    handleDelete(index,row){
+      // console.log(222,index,row);
+      this.$confirm('是否确认删除？','警告',{
+        confirmbuttontext:'确定',
+        canclebuttontext:'取消',
+        type:'warning'
+      }).then(_ => {this.$axios.get(`http://192.168.1.3:8080/api/delTeacher`,{params:{id:row.id}}).then(res => {
+        // console.log(666,res);
+        this.getData();
+      })
+      })
+    },
     delate(){},
     modify(){},
     search(){
       console.log(11,this.searchValue);
       for(let a of this.tabledata){
-        if(this.searchValue == a.id || this.searchValue == a.name){
-         console.log(22,a);
+        if(this.searchValue == a.num || this.searchValue == a.name){
+        //  console.log(22,a);
          this.tabledata = [],
          this.tabledata.push(a);
         }else{
@@ -78,11 +111,22 @@ export default {
         if(!valid){
           return false;
         }else{
-          console.log(this.teacherData);
-          this.tabledata.push(this.teacherData);
-          this.dialogVisible = false;
-          this.$message.success('创建成功！');
+          // console.log(this.teacherData);
+          // this.tabledata.push(this.teacherData);   
+          this.$axios.post('http://192.168.1.3:8080/api/addTeacher',this.teacherData).then(res => {
+            // console.log(444,res);
+            this.dialogVisible = false;
+            this.$message.success('创建成功！');
+            this.getData();
+          })
         }
+      })
+    },
+    getData(){
+      this.$axios.get('http://192.168.1.3:8080/api/getTeacher').then(res => {
+          // console.log(555,res.data);
+          this.tabledata = res.data;
+          // console.log(123,this.tabledata)
       })
     }
   }

@@ -6,10 +6,13 @@ import App from './App'
 import elementui from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css';
 import {router} from './router';
+import axios from 'axios';
 console.log({router});
 //定义全局变量
 Vue.use(elementui)
 
+Vue.prototype.$axios = axios;
+console.log(123,Vue.$axios);
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */
