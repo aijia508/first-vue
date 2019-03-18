@@ -3,9 +3,9 @@
   <div class="bar">
     <div class="bar_left">
       <el-button-group>
-        <el-button type="primary" @click="dialogVisible=true">创建</el-button>
-        <el-button type="primary" @click="delate">删除</el-button>
-        <el-button type="primary" @click="modify">修改</el-button>
+        <el-button type="primary" @click="create">创建</el-button>
+        <!-- <el-button type="primary" @click="delate">删除</el-button>
+        <el-button type="primary" @click="modify">修改</el-button> -->
       </el-button-group>
     </div>
     <div class="bar_right">
@@ -31,7 +31,7 @@
     </el-table-column>
     </el-table>
   </div>
-  <el-dialog title="创建教职工对话框" :visible.sync="dialogVisible">
+  <el-dialog :title="title" :visible.sync="dialogVisible">
     <el-form :model="teacherData" :rules="myRules" ref="formData" label-width="80px">
       <el-form-item label="工号" prop="num">
         <el-input v-model="teacherData.num"></el-input>
@@ -46,7 +46,8 @@
         </el-radio-group>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" @click="add">创建</el-button>
+        <el-button type="primary" @click="add" v-show="tag==1">创建</el-button>
+        <el-button type="primary" @click="modify" v-show="tag==2">修改</el-button>
         <el-button @click="dialogVisible=false">取消</el-button>
       </el-form-item>
     </el-form>
@@ -58,7 +59,7 @@
 export default {
   data () {
     return {
-      dialogVisible:false,searchValue:'',
+      dialogVisible:false,searchValue:'',tag:'',title:'',
       teacherData:{num:'',name:'',sex:''},
       myRules:{
         num:{required:true,message:'请输入工号',trigger:'blur'},
@@ -77,7 +78,29 @@ export default {
   },
   methods: {
     handleEdit(index,row){
-      // console.log(index,row);
+      console.log(index,row);
+      this.dialogVisible = true;
+      this.title = '修改教职工信息对话框';
+      this.tag = 2;
+      this.teacherData.num = row.num;
+      this.teacherData.name = row.name;
+      this.teacherData.sex = row.sex;
+      this.teacherData.id = row.id;
+      console.log(123,this.teacherData);
+    },
+    create(){
+      this.dialogVisible=true;
+      this.tag=1;
+      this.title = '创建教职工信息对话框';
+    },
+    modify(){
+      console.log(12345,this.teacherData);
+      this.$axios.post('http://192.168.1.3:8080/api/updateTeacher',this.teacherData).then(res => {
+        console.log(888,res);
+        this.getData();
+        this.dialogVisible = false;
+        this.$message.success('修改成功！');
+      })
     },
     handleDelete(index,row){
       // console.log(222,index,row);
@@ -92,7 +115,6 @@ export default {
       })
     },
     delate(){},
-    modify(){},
     search(){
       console.log(11,this.searchValue);
       for(let a of this.tabledata){
@@ -114,7 +136,7 @@ export default {
           // console.log(this.teacherData);
           // this.tabledata.push(this.teacherData);   
           this.$axios.post('http://192.168.1.3:8080/api/addTeacher',this.teacherData).then(res => {
-            // console.log(444,res);
+            console.log(444,this.teacherData);
             this.dialogVisible = false;
             this.$message.success('创建成功！');
             this.getData();
@@ -157,9 +179,9 @@ export default {
       display: inline-block;
       position:absolute;
       right:0;
-      .el-input{
-        width:800px;
-      }
+      // .el-input{
+      //   width:800px;
+      // }
       .el-input-group__append button{
         color: #fff;
         background-color: #409EFF;
