@@ -26,33 +26,35 @@ export default{
     },
     methods: {
         loginButton(){
-            // this.$refs.formValidate.validate(valid => {
-            //     if(valid){
-            //         if(this.formdata.user == '123' && this.formdata.password == '123'){
-            //             sessionStorage.setItem('loginState',1);
-            //             let url = this.$route.query.redirect;
-            //             if(url){
-            //                 this.$router.push({path:url});
-            //             }else{
-            //                 this.$router.push('/teacher');
-            //             }
-            //             this.$message.success('登录成功！');
-            //         }else{
-            //             this.$message.error('用户名或密码错误！')
-            //         }
-            //     }else return false;
-                
-            // });
-            this.$refs.formValidate.validate((valid) => {
+            this.$refs.formValidate.validate(valid => {
                 if(valid){
-                    this.$axios.post('http://192.168.1.3:8080/api/login',this.formdata).then(res => {
-                        console.log(333,res)
-                        if(res.data.length > 0){
+                    // if(this.formdata.user == '123' && this.formdata.password == '123'){
+                        this.$emit("listenToChildEvent","formdata");
+                        // sessionStorage.setItem('loginState',1);
+                        // let url = this.$route.query.redirect;
+                        // if(url){
+                        //     this.$router.push({path:url});
+                        // }else{
                             this.$router.push('/teacher');
-                        }
-                    })
-                }
-            })
+                        // }
+                        this.$message.success('登录成功！');
+                    // }else{
+                    //     this.$message.error('用户名或密码错误！')
+                    // }
+                }else return false;
+                
+            });
+            // this.$refs.formValidate.validate((valid) => {
+            //     if(valid){
+            //         this.$axios.post('http://192.168.1.3:8080/api/login',this.formdata).then(res => {
+            //             console.log(333,res)
+            //             if(res.data.length > 0){
+            //                 this.$router.push('/teacher');
+            //                 //this.$emit("listenToChildEvent","res.data");
+            //             }
+            //         })
+            //     }
+            // })
             
             
         },

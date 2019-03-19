@@ -1,17 +1,21 @@
 <template>
   <div id="app">
     <!--<img src="./assets/logo.png">-->
-    <router-view/>
+    <router-view :test="tes" @listenToChildEvent="showMsgFromChild"/>
   </div>
 </template>
 
 <script>
 export default {
   name: 'App',
+  data(){return{tes:'admin'}},
   created(){
   // console.log(this.$route);
   // console.log(this.$route.meta.requireAuth);
-  console.log(222,this.$axios);
+  // console.log(222,this.$axios);
+  },
+  methods:{
+    showMsgFromChild(data){console.log(222,data);}
   }
 }
 </script>
