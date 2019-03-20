@@ -6,6 +6,7 @@ import App from './App'
 import elementui from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css';
 import {router} from './router';
+// import '@/assets/css/public.scss'
 import axios from 'axios';
 console.log({router});
 //定义全局变量
