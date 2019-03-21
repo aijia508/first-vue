@@ -8,7 +8,7 @@
           <img src="static/img/头像女孩.png"/>
           <span>{{test}}<i class="el-icon-arrow-down el-icon--right"></i></span>
           <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item><span @click="userCenter"><img src="static/img/头像.png"/>个人中心</span></el-dropdown-item>
+            <el-dropdown-item><span @click="$router.push('/personal')"><img src="static/img/头像.png"/>个人中心</span></el-dropdown-item>
             <el-dropdown-item><span @click="quit"><img src="static/img/退出1.png"/>退出登录</span></el-dropdown-item>
           </el-dropdown-menu>
           </el-dropdown>
@@ -19,9 +19,13 @@
     <el-aside >
       <el-menu :default-active="activeIndex" router background-color="#5e4dad" text-color="#fff" active-text-color="#ffd04b">
         <el-submenu index="1">
-        <template slot="title">人员</template>
-          <el-menu-item index="1-1" :route="{name:'teacher'}">教师</el-menu-item>
-          <el-menu-item index="1-2" :route="{name:'student'}">学生</el-menu-item>
+        <template slot="title">人员信息</template>
+          <el-menu-item index="1-1" :route="{name:'teacher'}">教师信息</el-menu-item>
+          <el-menu-item index="1-2" :route="{name:'student'}">学生信息</el-menu-item>
+        </el-submenu>
+        <el-submenu index="2">
+        <template slot="title">用户管理</template>
+          <el-menu-item index="2-1" :route="{name:'personal'}">个人中心</el-menu-item>
         </el-submenu>
       </el-menu>
     </el-aside>
@@ -29,34 +33,7 @@
       <router-view></router-view>
     </el-main>
   </el-container>
-  <el-dialog :visible.sync="dialogVisible">
-    <el-form :model="userInfor" label-width="80px">
-      <el-form-item label="头像" prop="">
-        <el-dropdown trigger="click">
-          <img src="static/img/头像女孩.png"/>
-          <span><i class="el-icon-arrow-down el-icon--right"></i></span>
-          <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item><span><i class="el-icon-upload2 el-icon--right"></i></span></el-dropdown-item>
-            <el-dropdown-item><i class="el-icon-download el-icon--right"></i></el-dropdown-item>
-          </el-dropdown-menu>
-        </el-dropdown>
-        <!--<span @click="editHead"><img src="static/img/头像女孩.png" style="width:40px"/><i class="el-icon-arrow-right el-icon--right"></i></span>-->
-      </el-form-item>
-      <el-form-item label="用户名" prop="user">
-        <el-input v-model="userInfor.user"></el-input>
-      </el-form-item>
-      <el-form-item label="旧密码" prop="oldPassWord">
-        <el-input v-model="userInfor.oldPassWord"></el-input>
-      </el-form-item>
-      <el-form-item label="新密码" prop="newPassWord">
-        <el-input v-model="userInfor.newPassWord"></el-input>
-      </el-form-item>
-      <el-form-item>
-        <el-button>保存</el-button>
-        <el-button>关闭</el-button>
-      </el-form-item>
-    </el-form>
-  </el-dialog>
+
 </div>
 
 </template>
@@ -65,14 +42,15 @@ export default {
   props:['test'],
     data(){
       return{
-        activeIndex:'',dialogVisible:false,
-        userInfor:{user:'',oldPassWord:'',newPassWord:''}
+        activeIndex:'',dialogVisible:false
+        
       }
     },
     mounted(){
       switch(this.$route.name){
         case 'teacher':this.activeIndex='1-1';break;
         case 'student':this.activeIndex='1-2';break;   
+        case 'personal':this.activeIndex='2-1';break;
       }
     },
     created(){console.log(888,this.test)},
@@ -88,9 +66,9 @@ export default {
           this.$message('取消退出')
         })
       },
-      userCenter(){
-        this.dialogVisible = true;
-      }
+      // userCenter(){
+      //   this.dialogVisible = true;
+      // }
     }
 }
 </script>

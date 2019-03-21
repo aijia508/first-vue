@@ -74,12 +74,9 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="less" >
 .home{
-  margin:0;
-  padding:0;
-  width:100%;
-  height:963px;
-  background-color:#E9EEF3;
-  position:relative;
+  padding:10px;
+  height:calc(100% - 20px);
+  background-color:rgb(236, 236, 241);
   .box-card{
     width:600px;
     height:400px;

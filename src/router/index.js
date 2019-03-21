@@ -31,7 +31,12 @@ export var router = new Router({
         name: 'teacher',
         component: resolve => require(['@/components/view/teacher'],resolve),
         meta:{requireAuth:true},
-      },
+        },{
+          path:'/personal',
+          name:'personal',
+          component: resolve => require(['@/components/view/personal'],resolve),
+          meta:{requireAuth:true},
+        }
     ]
   }]
 });
